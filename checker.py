@@ -120,6 +120,6 @@ class Checker:
 
         plt.show()
 
-c = Checker('dbro_raceway', rf.test)
+c = Checker('dbro_raceway', rf.progressTest)
 
 c.plotting()

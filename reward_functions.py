@@ -76,7 +76,7 @@ def offTrackTest(params):
     '''
     
     # Read input parameters
-    offTrack = params['is_off_track']
+    offTrack = params['is_offtrack']
     
     if offTrack:
         reward = 1.0
