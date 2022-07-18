@@ -77,6 +77,14 @@ class Checker:
                 checkParams.setIsOffTrack( diff > checkParams.getTrackWidth()/2 )
                 checkParams.setAllWheelsOnTrack( checkParams.getIsOffTrack() )
 
+                leftSideDist = uf.getTwoPointDistance(self.leftCoords[steps-1][0], xTest, self.leftCoords[steps-1][1], yTest)
+                rightSideDist = uf.getTwoPointDistance(self.rightCoords[steps-1][0], xTest, self.rightCoords[steps-1][1], yTest)
+
+                if  leftSideDist < rightSideDist:
+                    checkParams.setIsLeftOfCenter(True)
+                else:
+                    checkParams.setIsLeftOfCenter(False)
+
                 rewardValues[(xTest,yTest)] = self.reward_function(checkParams.getAll())
 
         return rewardValues
