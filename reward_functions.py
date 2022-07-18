@@ -27,3 +27,19 @@ def default(params):
         reward = 1e-3  # likely crashed/ close to off track
     
     return float(reward)
+
+
+def test(params):
+    '''
+    Test params
+    '''
+    
+    # Read input parameters
+    isLeftOfCenter = params['is_left_of_center']
+
+    if isLeftOfCenter:
+        reward = 1.0
+    else:
+        reward = 1e-3  
+
+    return float(reward)
