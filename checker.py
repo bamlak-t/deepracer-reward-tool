@@ -66,24 +66,34 @@ class Checker:
                                     y1 = coords[1], 
                                     y2 = yTest)
 
-                    if distance < diff:
+                    if distance <= diff:
                         diff = distance
                         steps = i+1
 
                 checkParams.setDistanceFromCenter(diff)
+
                 checkParams.setSteps(steps)
+
                 checkParams.setProgress(steps/len(self.centerCoords))
 
                 checkParams.setIsOffTrack( diff > checkParams.getTrackWidth()/2 )
+
                 checkParams.setAllWheelsOnTrack( checkParams.getIsOffTrack() )
 
+                # set if left of center or not
                 leftSideDist = uf.getTwoPointDistance(self.leftCoords[steps-1][0], xTest, self.leftCoords[steps-1][1], yTest)
                 rightSideDist = uf.getTwoPointDistance(self.rightCoords[steps-1][0], xTest, self.rightCoords[steps-1][1], yTest)
-
                 if  leftSideDist < rightSideDist:
                     checkParams.setIsLeftOfCenter(True)
                 else:
                     checkParams.setIsLeftOfCenter(False)
+
+                # closest points on the track
+                if steps < len(self.centerCoords)-1:
+                    nextCoord = self.centerCoords[steps]
+                else:
+                    nextCoord = self.centerCoords[0]
+                checkParams.setClosestWaypoints( [self.centerCoords[steps-2], nextCoord] )
 
                 rewardValues[(xTest,yTest)] = self.reward_function(checkParams.getAll())
 
@@ -110,6 +120,6 @@ class Checker:
 
         plt.show()
 
-c = Checker('dbro_raceway', rf.default)
+c = Checker('dbro_raceway', rf.test)
 
 c.plotting()

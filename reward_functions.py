@@ -29,15 +29,56 @@ def default(params):
     return float(reward)
 
 
-def test(params):
+def stepsTest(params):
+    '''
+    Test params
+    '''
+
+    # Read input parameters
+    steps = params['steps']
+    if steps > 80:
+        reward = 1.0
+    elif steps > 40 and steps <= 80:
+        reward = 0.5
+    else:
+        reward = 1e-3  
+
+    return float(reward)
+
+def progressTest(params):
+    '''
+    Test params
+    '''
+
+    # Read input parameters
+    progress = params['progress']
+
+    return 1*float(progress)
+
+def leftOfCenterTest(params):
     '''
     Test params
     '''
     
     # Read input parameters
-    isLeftOfCenter = params['is_left_of_center']
+    leftOfCenter = params['is_left_of_center']
 
-    if isLeftOfCenter:
+    if leftOfCenter:
+        reward = 1.0
+    else:
+        reward = 1e-3  
+
+    return float(reward)
+
+def offTrackTest(params):
+    '''
+    Test params
+    '''
+    
+    # Read input parameters
+    offTrack = params['is_off_track']
+    
+    if offTrack:
         reward = 1.0
     else:
         reward = 1e-3  
