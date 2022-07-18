@@ -12,3 +12,7 @@ def getAllDistance(data):
 
         total += getTwoPointDistance(x1,x2,y1,y2)
     return total
+
+# TODO get max x and y range from data
+def getMaxXYRange():
+    return 65, 45

@@ -1,4 +1,4 @@
-class params:
+class Params:
 
     def __init__(self):
     
@@ -89,6 +89,26 @@ class params:
     
     def getHeading(self):
         return self.heading
+
+    def getAll(self):
+        return {
+        "all_wheels_on_track": self.all_wheels_on_track,   
+        "track_length": self.track_length,                  
+        "track_width": self.track_width,                  
+        "is_reversed": self.is_reversed,                 
+        "waypoints": self.waypoints,       
+        "speed": self.speed,                       
+        "steering_angle": self.steering_angle,            
+        "heading": self.heading,                  
+        "x": self.x,                         
+        "y": self.y,                          
+        "closest_waypoints": self.closest_waypoints,     
+        "distance_from_center": self.distance_from_center,        
+        "is_left_of_center": self.is_left_of_center,           
+        "is_offtrack": self.is_offtrack,                   
+        "progress": self.progress,                    
+        "steps": self.steps,                          
+    }
 
         #  "objects_distance": [float, ],         # list of the objects' distances in meters between 0 and track_length in relation to the starting line.
         #  "objects_heading": [float, ],          # list of the objects' headings in degrees between -180 and 180.
