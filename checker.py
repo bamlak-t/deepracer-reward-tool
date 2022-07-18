@@ -73,7 +73,7 @@ class Checker:
 
                 self.checkParams.setSteps(steps)
 
-                self.checkParams.setProgress(steps/len(self.centerCoords))
+                self.checkParams.setProgress(steps/len(self.centerCoords)*100)
 
                 self.checkParams.setIsOffTrack( diff > self.checkParams.getTrackWidth()/2 )
 
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     # p2 = params.Params()
     # p2.setHeading(30)
 
-    c1 = Checker('dbro_raceway', rf.racingLine, p1)
+    c1 = Checker('dbro_raceway', rf.racingLine2, p1)
 
     # c2 = Checker('dbro_raceway', rf.eg1, p2)
 
