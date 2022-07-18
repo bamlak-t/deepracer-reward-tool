@@ -60,7 +60,7 @@ class Checker:
 
                 checkParams.setDistanceFromCenter(diff)
 
-                rewardValues[(x,y)] = self.reward_function(checkParams.getAll())
+                rewardValues[(xTest,yTest)] = self.reward_function(checkParams.getAll())
 
         return rewardValues
 
