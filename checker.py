@@ -7,7 +7,7 @@ import math
 import params
 
 class Checker:
-    def __init__(self, track, reward_function):
+    def __init__(self, track, reward_function, params):
 
         data = np.load('./Track_Info/'+ track + '.npy')
         centerCoords = []
@@ -24,13 +24,12 @@ class Checker:
         self.leftCoords = np.array(leftCoords)
         self.rightCoords = np.array(rightCoords)
         self.reward_function = reward_function
+        self.checkParams = params
 
     def check(self):
 
-        checkParams = params.Params()
-
         # distance between left and right side of the track
-        checkParams.setTrackWidth(
+        self.checkParams.setTrackWidth(
             uf.getTwoPointDistance(self.leftCoords[0][0], self.rightCoords[0][0], 
             self.leftCoords[0][1], self.rightCoords[0][1]))
 
@@ -40,9 +39,9 @@ class Checker:
             cur = self.centerCoords[i]
             next = self.centerCoords[i+1]
             trackLength += uf.getTwoPointDistance(cur[0], next[0], cur[1], next[1])
-        checkParams.setTrackLength(trackLength)
+        self.checkParams.setTrackLength(trackLength)
 
-        checkParams.setWaypoints(self.centerCoords)
+        self.checkParams.setWaypoints(self.centerCoords)
 
         rewardValues = {}
 
@@ -54,8 +53,8 @@ class Checker:
                 xTest = x/10
                 yTest = y/10
 
-                checkParams.setX(xTest)
-                checkParams.sety(yTest)
+                self.checkParams.setX(xTest)
+                self.checkParams.sety(yTest)
 
                 diff = math.inf
                 steps = 0
@@ -70,32 +69,32 @@ class Checker:
                         diff = distance
                         steps = i+1
 
-                checkParams.setDistanceFromCenter(diff)
+                self.checkParams.setDistanceFromCenter(diff)
 
-                checkParams.setSteps(steps)
+                self.checkParams.setSteps(steps)
 
-                checkParams.setProgress(steps/len(self.centerCoords))
+                self.checkParams.setProgress(steps/len(self.centerCoords))
 
-                checkParams.setIsOffTrack( diff > checkParams.getTrackWidth()/2 )
+                self.checkParams.setIsOffTrack( diff > self.checkParams.getTrackWidth()/2 )
 
-                checkParams.setAllWheelsOnTrack( checkParams.getIsOffTrack() )
+                self.checkParams.setAllWheelsOnTrack( self.checkParams.getIsOffTrack() )
 
                 # set if left of center or not
                 leftSideDist = uf.getTwoPointDistance(self.leftCoords[steps-1][0], xTest, self.leftCoords[steps-1][1], yTest)
                 rightSideDist = uf.getTwoPointDistance(self.rightCoords[steps-1][0], xTest, self.rightCoords[steps-1][1], yTest)
                 if  leftSideDist < rightSideDist:
-                    checkParams.setIsLeftOfCenter(True)
+                    self.checkParams.setIsLeftOfCenter(True)
                 else:
-                    checkParams.setIsLeftOfCenter(False)
+                    self.checkParams.setIsLeftOfCenter(False)
 
                 # closest points on the track
                 if steps < len(self.centerCoords)-1:
                     nextCoord = self.centerCoords[steps]
                 else:
                     nextCoord = self.centerCoords[0]
-                checkParams.setClosestWaypoints( [self.centerCoords[steps-2], nextCoord] )
+                self.checkParams.setClosestWaypoints( [self.centerCoords[steps-2], nextCoord] )
 
-                rewardValues[(xTest,yTest)] = self.reward_function(checkParams.getAll())
+                rewardValues[(xTest,yTest)] = self.reward_function(self.checkParams.getAll())
 
         return rewardValues
 
@@ -106,9 +105,9 @@ class Checker:
             color = "green"
             if rewardValues[coords] == 1:
                 color = "red"
-            elif rewardValues[coords] == 0.5:
+            elif rewardValues[coords] >= 0.5 and rewardValues[coords] <= 1:
                 color = "yellow"
-            elif rewardValues[coords] == 0.5:
+            elif rewardValues[coords] < 0.5:
                 color = "blue"
 
             plt.plot(coords[0], coords[1], marker="o", markersize=1, markeredgecolor=color, markerfacecolor=color)
@@ -120,6 +119,17 @@ class Checker:
 
         plt.show()
 
-c = Checker('dbro_raceway', rf.progressTest)
+if __name__ == "__main__":
 
-c.plotting()
+    p1 = params.Params()
+    p1.setHeading(0)
+
+    p2 = params.Params()
+    p2.setHeading(30)
+
+    c1 = Checker('dbro_raceway', rf.progressTest, p1)
+
+    c2 = Checker('dbro_raceway', rf.eg1, p2)
+
+    c1.plotting()
+    c2.plotting()

@@ -21,6 +21,17 @@ class Params:
         self.progress = None                    
         self.steps = None     
 
+    def setIsReversed(self, is_reversed):
+        self.is_reversed = is_reversed
+
+    def setSpeed(self, speed):
+        self.speed = speed
+    
+    def setSteeringAngle(self, steering_angle):
+        self.steering_angle = steering_angle
+    
+    def setHeading(self, heading):
+        self.heading = heading
 
     def setAllWheelsOnTrack(self, all_wheels_on_track):
         self.all_wheels_on_track = all_wheels_on_track
