@@ -2,7 +2,6 @@ class Params:
 
     def __init__(self):
     
-        self.all_wheels_on_track = True        # flag to indicate if the agent is on the track
         self.is_reversed = False               # flag to indicate if the agent is driving clockwise (True) or counter clockwise (False).
         self.speed = 1,                        # agent's speed in meters per second (m/s)
         self.steering_angle = 15               # agent's steering angle in degrees
@@ -12,6 +11,7 @@ class Params:
         self.track_width = None
         self.waypoints = None
 
+        self.all_wheels_on_track = None        
         self.x = None
         self.y = None
         self.closest_waypoints = None
@@ -21,6 +21,9 @@ class Params:
         self.progress = None                    
         self.steps = None     
 
+
+    def setAllWheelsOnTrack(self, all_wheels_on_track):
+        self.all_wheels_on_track = all_wheels_on_track
 
     def setX(self, x):
         self.x = x
@@ -54,6 +57,9 @@ class Params:
     
     def setWaypoints(self, waypoints):
         self.waypoints = waypoints
+
+    def getAllWheelsOnTrack(self):
+        return self.all_wheels_on_track
 
     def getx(self):
         return self.x

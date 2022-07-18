@@ -42,7 +42,7 @@ class Checker:
             trackLength += uf.getTwoPointDistance(cur[0], next[0], cur[1], next[1])
         checkParams.setTrackLength(trackLength)
 
-        checkParams.setWaypoints(None)
+        checkParams.setWaypoints(self.centerCoords)
 
         rewardValues = {}
 
@@ -58,7 +58,8 @@ class Checker:
                 checkParams.sety(yTest)
 
                 diff = math.inf
-                for coords in self.centerCoords:
+                steps = 0
+                for i, coords in enumerate(self.centerCoords):
                     distance = uf.getTwoPointDistance(
                                     x1 = coords[0], 
                                     x2 = xTest, 
@@ -67,8 +68,14 @@ class Checker:
 
                     if distance < diff:
                         diff = distance
+                        steps = i+1
 
                 checkParams.setDistanceFromCenter(diff)
+                checkParams.setSteps(steps)
+                checkParams.setProgress(steps/len(self.centerCoords))
+
+                checkParams.setIsOffTrack( diff > checkParams.getTrackWidth()/2 )
+                checkParams.setAllWheelsOnTrack( checkParams.getIsOffTrack() )
 
                 rewardValues[(xTest,yTest)] = self.reward_function(checkParams.getAll())
 
