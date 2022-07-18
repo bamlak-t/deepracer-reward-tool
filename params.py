@@ -8,6 +8,19 @@ class Params:
         self.steering_angle = 15               # agent's steering angle in degrees
         self.heading= 30                       # agent's yaw in degrees
 
+        self.track_length = None    
+        self.track_width = None
+        self.waypoints = None
+
+        self.x = None
+        self.y = None
+        self.closest_waypoints = None
+        self.distance_from_center = None
+        self.is_left_of_center = None           
+        self.is_offtrack = None                   
+        self.progress = None                    
+        self.steps = None     
+
 
     def setX(self, x):
         self.x = x

@@ -16,3 +16,7 @@ def getAllDistance(data):
 # TODO get max x and y range from data
 def getMaxXYRange():
     return 65, 45
+
+# TODO get track_width, track_length and waypoints from data
+def getTrackInfo():
+    return {"track_width": 0.5334, "track_length": 40.2, "waypoints": [(float, float), ]}
