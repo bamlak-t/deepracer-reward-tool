@@ -44,8 +44,10 @@ class Checker:
 
         checkParams.setWaypoints(None)
 
-        xRange, yRange = uf.getMaxXYRange()
         rewardValues = {}
+
+        xRange = int(max(self.rightCoords[:,0]) * 10) + 5
+        yRange = int(max(self.rightCoords[:,1]) * 10) + 5
 
         for x in range(-xRange, xRange):
             for y in range(-xRange, yRange):
