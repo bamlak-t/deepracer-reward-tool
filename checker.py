@@ -124,12 +124,12 @@ if __name__ == "__main__":
     p1 = params.Params()
     p1.setHeading(0)
 
-    p2 = params.Params()
-    p2.setHeading(30)
+    # p2 = params.Params()
+    # p2.setHeading(30)
 
-    c1 = Checker('dbro_raceway', rf.progressTest, p1)
+    c1 = Checker('dbro_raceway', rf.racingLine, p1)
 
-    c2 = Checker('dbro_raceway', rf.eg1, p2)
+    # c2 = Checker('dbro_raceway', rf.eg1, p2)
 
     c1.plotting()
-    c2.plotting()
+    # c2.plotting()

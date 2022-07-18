@@ -2,6 +2,9 @@
     Contains multiple reward functions to be checked
 '''
 
+import numpy as np
+import useful_functions as uf
+
 def default(params):
     '''
     Example of rewarding the agent to follow center line
@@ -119,4 +122,80 @@ def eg1(params):
     if direction_diff > DIRECTION_THRESHOLD:
         reward *= 0.5
 
+    return float(reward)
+
+def racingLine(params):
+    '''
+    Test params
+    '''
+    offset = np.genfromtxt('racingLineCoords.csv', delimiter=',')
+
+    # print(racingLineCoords)
+
+    # Read input parameters
+    track_width = params['track_width']
+    center = params['waypoints']
+    steps = params['steps']
+    x = params['x']
+    y = params['y']
+
+    final = center + offset
+
+    print(offset)
+    
+
+    distance_from_racing_line = uf.getTwoPointDistance(final[steps-1][0], x, final[steps-1][1], y)
+    # Calculate 3 markers that are at varying distances away from the center line
+    marker_1 = 0.1 * track_width
+    marker_2 = 0.25 * track_width
+    marker_3 = 0.5 * track_width
+    
+    # Give higher reward if the car is closer to center line and vice versa
+    if distance_from_racing_line <= marker_1:
+        reward = 1.0
+    elif distance_from_racing_line <= marker_2:
+        reward = 0.5
+    elif distance_from_racing_line <= marker_3:
+        reward = 0.1
+    else:
+        reward = 1e-3  # likely crashed/ close to off track
+    
+    return float(reward)
+
+
+def racingLine2(params):
+    '''
+    Test params
+    '''
+
+    # print(racingLineCoords)
+
+    # Read input parameters
+    track_width = params['track_width']
+    distance_from_center = params['distance_from_center']
+    center = params['waypoints']
+    steps = params['steps']
+    x = params['x']
+    y = params['y']
+
+    if steps > 0 and steps < 30:
+        distance_from_center += 30/steps
+    elif steps > 30 and steps < 60:
+        pass
+
+    # Calculate 3 markers that are at varying distances away from the center line
+    marker_1 = 0.1 * track_width
+    marker_2 = 0.25 * track_width
+    marker_3 = 0.5 * track_width
+    
+    # Give higher reward if the car is closer to center line and vice versa
+    if distance_from_center <= marker_1:
+        reward = 1.0
+    elif distance_from_center <= marker_2:
+        reward = 0.5
+    elif distance_from_center <= marker_3:
+        reward = 0.1
+    else:
+        reward = 1e-3  # likely crashed/ close to off track
+    
     return float(reward)
