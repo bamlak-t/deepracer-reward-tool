@@ -29,14 +29,22 @@ class Checker:
 
         checkParams = params.Params()
 
-        initVals = uf.getTrackInfo()
+        # distance between left and right side of the track
+        checkParams.setTrackWidth(
+            uf.getTwoPointDistance(self.leftCoords[0][0], self.rightCoords[0][0], 
+            self.leftCoords[0][1], self.rightCoords[0][1]))
 
-        checkParams.setTrackWidth(initVals["track_width"])
-        checkParams.setTrackLength(initVals["track_length"])
-        checkParams.setWaypoints(initVals["waypoints"])
+        # total distance between each center coordinate and its next coordinate
+        trackLength = 0
+        for i in range(len(self.centerCoords)-1):
+            cur = self.centerCoords[i]
+            next = self.centerCoords[i+1]
+            trackLength += uf.getTwoPointDistance(cur[0], next[0], cur[1], next[1])
+        checkParams.setTrackLength(trackLength)
+
+        checkParams.setWaypoints(None)
 
         xRange, yRange = uf.getMaxXYRange()
-
         rewardValues = {}
 
         for x in range(-xRange, xRange):
