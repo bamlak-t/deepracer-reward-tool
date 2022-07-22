@@ -3,7 +3,7 @@ class Params:
     def __init__(self):
     
         self.is_reversed = False               # flag to indicate if the agent is driving clockwise (True) or counter clockwise (False).
-        self.speed = 1,                        # agent's speed in meters per second (m/s)
+        self.speed = 1                        # agent's speed in meters per second (m/s)
         self.steering_angle = 15               # agent's steering angle in degrees
         self.heading= 30                       # agent's yaw in degrees
 

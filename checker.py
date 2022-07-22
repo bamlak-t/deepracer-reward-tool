@@ -101,16 +101,26 @@ class Checker:
     def plotting(self):
         rewardValues = self.check()
 
-        for coords in rewardValues:
-            color = "green"
-            if rewardValues[coords] == 1:
-                color = "red"
-            elif rewardValues[coords] >= 0.5 and rewardValues[coords] <= 1:
-                color = "yellow"
-            elif rewardValues[coords] < 0.5:
-                color = "blue"
+        maxVal = max(rewardValues.values())
 
-            plt.plot(coords[0], coords[1], marker="o", markersize=1, markeredgecolor=color, markerfacecolor=color)
+        for coords in rewardValues:
+            # color = tuple((int(rewardValues[coords]*255), 0, 0))
+
+            # curReward = rewardValues[coords]
+            # if curReward == 1:
+            #     color = "red"
+            # elif curReward >= 0.5 and curReward <= 1:
+            #     color = "yellow"
+            # elif curReward < 0.5:
+            #     color = "blue"
+
+            # print(color)
+
+            r = rewardValues[coords] / maxVal
+
+            
+
+            plt.plot(coords[0], coords[1], marker="o", markersize=1, markeredgecolor="r", markerfacecolor="r", alpha=r)
 
 
         plt.plot(self.centerCoords[:,0], self.centerCoords[:,1], alpha=0.5, color="black")
@@ -123,11 +133,14 @@ if __name__ == "__main__":
 
     p1 = params.Params()
     p1.setHeading(0)
+    p1.setSpeed(3)
+    p1.setSteeringAngle(0)
+    p1.setIsReversed(False)
 
     # p2 = params.Params()
     # p2.setHeading(30)
 
-    c1 = Checker('dbro_raceway', rf.racingLine2, p1)
+    c1 = Checker('dbro_raceway', rf.racingLine4, p1)
 
     # c2 = Checker('dbro_raceway', rf.eg1, p2)
 
