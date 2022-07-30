@@ -103,26 +103,14 @@ class Checker:
 
         maxVal = max(rewardValues.values())
 
+        # plot reward points
         for coords in rewardValues:
-            # color = tuple((int(rewardValues[coords]*255), 0, 0))
-
-            # curReward = rewardValues[coords]
-            # if curReward == 1:
-            #     color = "red"
-            # elif curReward >= 0.5 and curReward <= 1:
-            #     color = "yellow"
-            # elif curReward < 0.5:
-            #     color = "blue"
-
-            # print(color)
-
+  
             r = rewardValues[coords] / maxVal
-
-            
 
             plt.plot(coords[0], coords[1], marker="o", markersize=1, markeredgecolor="r", markerfacecolor="r", alpha=r)
 
-
+        # plot track
         plt.plot(self.centerCoords[:,0], self.centerCoords[:,1], alpha=0.5, color="black")
         plt.plot(self.leftCoords[:,0], self.leftCoords[:,1], alpha=0.5, color="black")
         plt.plot(self.rightCoords[:,0], self.rightCoords[:,1], alpha=0.5, color="black")
